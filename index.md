@@ -9,9 +9,8 @@ layout: default
 [Contacto](mailto:nachogonzdom@gmail.com)
 
 ## 📌 Últimos write-ups
-- [HTB Enigma - NFS Exposure + IMAP Pivoting + OpenSTAManager RCE + OliveTin Command Injection](/tech-bites/2026-08-05-htb-enigma) [Máquina Activa]
-- [HTB Paperwork - LPD Command Injection + PJL Directory Traversal + Socket FD Leak](/tech-bites/2026-08-02-htb-paperwork) [Máquina Activa]
-- [HTB Fireflow - Langflow RCE + JWT Forgery + Kubernetes Privesc](/tech-bites/2026-07-07-htb-fireflow)
+- [HTB Orion - Craft CMS Preauth RCE + Bcrypt Cracking + Telnet Authentication Bypass](/tech-bites/2026-09-10-htb-orion)
+- [HTB Enigma - NFS Exposure + IMAP Pivoting + OpenSTAManager RCE + OliveTin Command Injection](/tech-bites/2026-08-05-htb-enigma)
 
   [Ver todos los write-ups →](/writeups/)
 
