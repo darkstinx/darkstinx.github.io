@@ -4,9 +4,11 @@ layout: default
 # Write-ups & Cyber
 [GitHub](https://github.com/darkstinx) • 
 [LinkedIn](https://www.linkedin.com/in/ignacio-gonzalez-dominguez/) • 
+[Hack The Box](https://app.hackthebox.com/users/1228969?profile-top-tab=machines&ownership-period=1M&profile-bottom-tab=prolabs) •
 [CV (ES)](/assets/cv.pdf) •
 [CV (EN)](/assets/cv_en.pdf) •
 [Contacto](mailto:nachogonzdom@gmail.com)
+
 
 ## 📌 Últimos write-ups
 - [HTB Orion - Craft CMS Preauth RCE + Bcrypt Cracking + Telnet Authentication Bypass](/tech-bites/2026-09-10-htb-orion)
