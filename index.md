@@ -11,8 +11,8 @@ layout: default
 
 
 ## 📌 Últimos write-ups
-- [HTB Orion - Craft CMS Preauth RCE + Bcrypt Cracking + Telnet Authentication Bypass](/tech-bites/2026-09-10-htb-orion)
-- [HTB Enigma - NFS Exposure + IMAP Pivoting + OpenSTAManager RCE + OliveTin Command Injection](/tech-bites/2026-08-05-htb-enigma)
+- [HTB Touch - Default Credential Disclosure + Kiosk Breakout + MySQL UDF Privesc](/tech-bites/2026-10-29-htb-touch)
+- [HTB Management - OpenAM Pre-auth RCE + XChaCha20 Decryption + rdiff-backup sudo Bypass](/tech-bites/2026-10-05-htb-management)
 
   [Ver todos los write-ups →](/writeups/)
 
