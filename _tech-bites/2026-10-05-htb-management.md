@@ -1,6 +1,6 @@
 # HTB — Management Writeup
 
-Oct 5, 2026 · @Nacho
+Oct 5, 2026
 
 ## Introducción
 
