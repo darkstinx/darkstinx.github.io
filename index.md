@@ -11,8 +11,8 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB Cohort - SSRF IP Filter Bypass + Marimo Unauth RCE + PackageKit TOCTOU Privesc](/tech-bites/2026-10-30-htb-cohort/)
 - [HTB Touch - Default Credential Disclosure +h Kiosk Breakout + MySQL UDF Privesc](/tech-bites/2026-10-29-htb-touch/)
-- [HTB Management - OpenAM Pre-auth RCE + XChaCha20 Decryption + rdiff-backup sudo Bypass](_/tech-bites/2026-10-05-htb-management/)
 
   [Ver todos los write-ups →](/writeups/)
 
@@ -22,6 +22,6 @@ layout: default
   [Ver todas las herramientas →](/herramientas/)
 
 ## 🎓 Cursos y 📜 Certificaciones
-- [Introducción a Linux](https://hack4u.io/certificate/0040-1279-3441-0484) · Hack4u (S4vitar) · Completado ✓
+- [Introducción al Hacking](https://hack4u.io/certificate/6446-7522-7419-2181)  · Hack4u (S4vitar) · Completado ✓
   
   [Ver todos los cursos y certificaciones →](/cursos-certificaciones/)
