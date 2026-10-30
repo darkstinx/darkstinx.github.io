@@ -1,3 +1,10 @@
+---
+title: "HTB Management - Write-Up"
+date: 2026-10-05
+categories: [Hack The Box]
+tags: [openam, java-deserialization, xchacha20, sudo-misconfiguration, glpi]
+---
+
 # HTB — Management Writeup
 
 Oct 5, 2026
