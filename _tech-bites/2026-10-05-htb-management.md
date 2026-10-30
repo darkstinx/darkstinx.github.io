@@ -5,21 +5,9 @@ categories: [Hack The Box]
 tags: [openam, java-deserialization, xchacha20, sudo-misconfiguration, glpi]
 ---
 
-# HTB — Management Writeup
-
-Oct 5, 2026
-
 ## Introducción
 
 Management es una máquina Linux de dificultad fácil en Hack The Box centrada en la explotación de una aplicación web de SSO, la extracción y descifrado de credenciales almacenadas en base de datos, y la escalada de privilegios mediante una restricción de sudo mal configurada.
-
-| Concepto | Valor |
-| --- | --- |
-| Plataforma | Hack The Box |
-| Dificultad | Easy |
-| SO | Ubuntu Linux |
-| IP víctima | 10.129.117.145 |
-| Técnicas | Pre-auth RCE · credential discovery · password reuse · sudo misconfiguration |
 
 **Ruta general:** RCE pre-auth en OpenAM → credenciales de GLPI → descifrado XChaCha20 → SSH como owen → bypass de rdiff-backup con sudo → root.
 
