@@ -11,8 +11,8 @@ layout: default
 
 
 ## 📌 Últimos write-ups
-- [HTB Touch - Default Credential Disclosure + Kiosk Breakout + MySQL UDF Privesc](/tech-bites/2026-10-29-htb-touch)
-- [HTB Management - OpenAM Pre-auth RCE + XChaCha20 Decryption + rdiff-backup sudo Bypass](/tech-bites/2026-10-05-htb-management)
+- [HTB Touch - Default Credential Disclosure + Kiosk Breakout + MySQL UDF Privesc](/tech-bites/2026-10-29-htb-touch.md)
+- [HTB Management - OpenAM Pre-auth RCE + XChaCha20 Decryption + rdiff-backup sudo Bypass](/tech-bites/2026-10-05-htb-management.md)
 
   [Ver todos los write-ups →](/writeups/)
 
