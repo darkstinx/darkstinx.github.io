@@ -11,8 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB Connected - FreePBX SQLi + Webshell RCE + incron/DAHDI init.conf Privesc](/tech-bites/2026-11-07-htb-connected/)
 - [HTB Cohort - SSRF IP Filter Bypass + Marimo Unauth RCE + PackageKit TOCTOU Privesc](/tech-bites/2026-10-30-htb-cohort/)
-- [HTB Touch - Default Credential Disclosure +h Kiosk Breakout + MySQL UDF Privesc](/tech-bites/2026-10-29-htb-touch/)
+
 
   [Ver todos los write-ups →](/writeups/)
 
