@@ -5,6 +5,7 @@ description: "Write-ups de máquinas de Hack The Box"
 ---
 # 📂 Write-ups
 
+- 2026-11-07: [Connected](/tech-bites/2026-11-07-htb-connected) (FreePBX SQLi + Webshell RCE + incron/DAHDI init.conf Privesc)
 - 2026-10-30: [Cohort](/tech-bites/2026-10-30-htb-cohort) (SSRF IP Filter Bypass + Marimo Unauth RCE + PackageKit TOCTOU Privesc)
 - 2026-10-29: [Touch](/tech-bites/2026-10-29-htb-touch) (Default Credential Disclosure + Kiosk Breakout + MySQL UDF Privesc)
 - 2026-10-05: [Management](/tech-bites/2026-10-05-htb-management) (OpenAM Pre-auth RCE + XChaCha20 Decryption + rdiff-backup sudo Bypass)
