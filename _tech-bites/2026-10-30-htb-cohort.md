@@ -9,14 +9,6 @@ tags: [ssrf, ip-filter-bypass, marimo-rce, host-header-pivot, packagekit-toctou,
 
 Cohort es una máquina Linux (Ubuntu 24.04) de dificultad fácil en Hack The Box centrada en la explotación de un SSRF en una función de validación de datos, el bypass de un filtro de IPs internas, el pivote a través de un reverse proxy por cabecera Host, un RCE no autenticado en un servicio interno (Marimo) y una condición de carrera (TOCTOU) en PackageKit para escalar a root.
 
-| Concepto | Valor |
-| --- | --- |
-| Plataforma | Hack The Box |
-| SO | Linux (Ubuntu 24.04) |
-| IP víctima | 10.129.138.218 |
-| Puertos abiertos | 22 (SSH), 80 (HTTP), 443 (HTTPS) |
-| Técnicas | SSRF · bypass de filtro de IPs · descubrimiento de servicio interno · CVE-2026-39987 (auth bypass en Marimo) · pivote vía Host header · CVE-2026-41651 (TOCTOU en PackageKit) |
-
 **Ruta general:** Enumeración de usuarios en la web (Mara Quinteros, Devin Oyelaran) → SSRF en el formulario "Source URL" de la app Cohort Analytics → bypass del filtro de IPs privadas usando la notación abreviada `127.1` → lectura del endpoint interno `/status` de Nginx, que revela un vhost interno de un notebook Marimo (`nb-<hash>.cohort.htb` → `127.0.0.1:8888`) → explotación de CVE-2026-39987 (bypass de autenticación en el WebSocket `/terminal/ws` de Marimo) alcanzado a través del reverse proxy público, que enruta por cabecera Host → shell como usuario `marimo` → escalada a root mediante CVE-2026-41651, una condición de carrera TOCTOU en las transacciones D-Bus de PackageKit.
 
 ## Fase 1 — Reconocimiento
