@@ -9,13 +9,6 @@ tags: [invite-bypass, mass-assignment, command-injection, overlayfs-privesc]
 
 TwoMillion es una máquina Linux de dificultad fácil/media en Hack The Box basada en una versión antigua de la web de celebración de los 2 millones de usuarios de HTB. Combina un bypass de la página de invitación mediante ingeniería inversa de JavaScript ofuscado, una vulnerabilidad de Mass Assignment en la API para escalar a administrador, una inyección de comandos ciega en un endpoint administrativo de generación de VPN, y una escalada de privilegios final mediante CVE-2023-0386 (OverlayFS/FUSE).
 
-| Concepto | Valor |
-| --- | --- |
-| Plataforma | Hack The Box |
-| SO | Linux |
-| Dominio | 2million.htb |
-| Técnicas | Deofuscación JS (Dean Edwards Packer) · ROT13 · Mass Assignment · Command Injection ciega · CVE-2023-0386 (OverlayFS privesc) |
-
 **Ruta general:** Fuzzing de directorios y vhosts → página `/invite` protegida por un código de invitación → deofuscación de `inviteapi.min.js` revela el endpoint oculto `/api/v1/invite/how/to/generate` → pista codificada en ROT13 que indica usar `/api/v1/invite/generate` → código de invitación en base64 → registro de usuario → exploración de la API (`GET /api/v1` autodocumentado) que filtra rutas solo-admin → **Mass Assignment** en `PUT /api/v1/admin/settings/update` inyectando `is_admin: 1` sin ser administrador → **Command Injection** ciega en `POST /api/v1/admin/vpn/generate` a través del campo `username`, confirmada por timing (`sleep 5`) y explotada con una reverse shell codificada en base64 vía Burp Repeater → shell como `www-data` → credenciales en un fichero `.env` del webroot → movimiento lateral por SSH como `admin` (contraseña reutilizada) → escalada a root con el PoC de **CVE-2023-0386** (OverlayFS/FUSE).
 
 ## Fase 1 — Reconocimiento y fuzzing
