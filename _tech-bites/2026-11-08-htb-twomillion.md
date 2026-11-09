@@ -246,4 +246,3 @@ id
 cat /root/root.txt
 ```
 
-> **Nota:** la conversación que documenta esta máquina termina justo tras compilar el exploit e indicar la secuencia `./fuse ... & / ./exp / comprobar SUID en `gc` / ./gc / cat /root/root.txt`, pero no muestra explícitamente la salida final confirmando `uid=0` ni el contenido de la flag de root. Si al ejecutar `./gc` no obtienes directamente una shell root, comprueba que el bit SUID se haya aplicado correctamente sobre `gc` (`ls -la ./gc`) y repite `./exp` si es necesario — dime si el resultado final fue distinto y ajusto esta sección.
