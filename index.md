@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB MakeSense - AES-GCM Stored XSS + Limited Bot Abuse + OCR-to-PHP RCE](/tech-bites/2026-11-09-htb-makesense/)
 - [HTB TwoMillion - Invite Bypass + Mass Assignment + Blind Command Injection + OverlayFS Privesc](/tech-bites/2026-11-08-htb-twomillion/)
 - [HTB Connected - FreePBX SQLi + Webshell RCE + incron/DAHDI init.conf Privesc](/tech-bites/2026-11-07-htb-connected/)
-- [HTB Cohort - SSRF IP Filter Bypass + Marimo Unauth RCE + PackageKit TOCTOU Privesc](/tech-bites/2026-10-30-htb-cohort/)
 
   [Ver todos los write-ups →](/writeups/)
 
