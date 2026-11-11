@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB Kobold - Wildcard Vhost Enumeration + MCPJam Inspector RCE + Hidden Docker Group Privesc](/tech-bites/2026-11-11-htb-kobold/)
 - [HTB MakeSense - AES-GCM Stored XSS + Limited Bot Abuse + OCR-to-PHP RCE](/tech-bites/2026-11-09-htb-makesense/)
 - [HTB TwoMillion - Invite Bypass + Mass Assignment + Blind Command Injection + OverlayFS Privesc](/tech-bites/2026-11-08-htb-twomillion/)
-- [HTB Connected - FreePBX SQLi + Webshell RCE + incron/DAHDI init.conf Privesc](/tech-bites/2026-11-07-htb-connected/)
 
   [Ver todos los write-ups →](/writeups/)
 
