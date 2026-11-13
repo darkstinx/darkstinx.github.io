@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB DoubleTake - OpenSSH musl Auth Bypass + Firefox Credential Theft + Docker xz Path Hijack RCE](/tech-bites/2026-11-13-htb-doubletake/)
 - [HTB Kobold - Wildcard Vhost Enumeration + MCPJam Inspector RCE + Hidden Docker Group Privesc](/tech-bites/2026-11-11-htb-kobold/)
 - [HTB MakeSense - AES-GCM Stored XSS + Limited Bot Abuse + OCR-to-PHP RCE](/tech-bites/2026-11-09-htb-makesense/)
-- [HTB TwoMillion - Invite Bypass + Mass Assignment + Blind Command Injection + OverlayFS Privesc](/tech-bites/2026-11-08-htb-twomillion/)
 
   [Ver todos los write-ups →](/writeups/)
 
