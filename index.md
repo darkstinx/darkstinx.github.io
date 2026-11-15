@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB CCTV - ZoneMinder Default Creds + CVE-2024-51482 SQLi + Bcrypt Cracking + CVE-2026-41651 Privesc](/tech-bites/2026-11-15-htb-cctv/)
 - [HTB DoubleTake - OpenSSH musl Auth Bypass + Firefox Credential Theft + Docker xz Path Hijack RCE](/tech-bites/2026-11-13-htb-doubletake/)
 - [HTB Kobold - Wildcard Vhost Enumeration + MCPJam Inspector RCE + Hidden Docker Group Privesc](/tech-bites/2026-11-11-htb-kobold/)
-- [HTB MakeSense - AES-GCM Stored XSS + Limited Bot Abuse + OCR-to-PHP RCE](/tech-bites/2026-11-09-htb-makesense/)
 
   [Ver todos los write-ups →](/writeups/)
 
