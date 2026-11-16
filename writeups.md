@@ -5,6 +5,7 @@ description: "Write-ups de máquinas de Hack The Box"
 ---
 # 📂 Write-ups
 
+- 2026-11-16: [WingData](/tech-bites/2026-11-16-htb-wingdata) (Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc)
 - 2026-11-15: [CCTV](/tech-bites/2026-11-15-htb-cctv) (ZoneMinder Default Creds + CVE-2024-51482 SQLi + Bcrypt Cracking + CVE-2026-41651 Privesc)
 - 2026-11-13: [DoubleTake](/tech-bites/2026-11-13-htb-doubletake) (OpenSSH musl Auth Bypass + Firefox Credential Theft + Docker xz Path Hijack RCE)
 - 2026-11-11: [Kobold](/tech-bites/2026-11-11-htb-kobold) (Wildcard Vhost Enumeration + MCPJam Inspector Unauth RCE + Hidden Docker Group Privesc)

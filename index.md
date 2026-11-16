@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB WingData - Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc](/tech-bites/2026-11-16-htb-wingdata/)
 - [HTB CCTV - ZoneMinder Default Creds + CVE-2024-51482 SQLi + Bcrypt Cracking + CVE-2026-41651 Privesc](/tech-bites/2026-11-15-htb-cctv/)
 - [HTB DoubleTake - OpenSSH musl Auth Bypass + Firefox Credential Theft + Docker xz Path Hijack RCE](/tech-bites/2026-11-13-htb-doubletake/)
-- [HTB Kobold - Wildcard Vhost Enumeration + MCPJam Inspector RCE + Hidden Docker Group Privesc](/tech-bites/2026-11-11-htb-kobold/)
 
   [Ver todos los write-ups →](/writeups/)
 
