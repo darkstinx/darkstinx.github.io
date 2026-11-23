@@ -5,7 +5,7 @@ description: "Write-ups de máquinas de Hack The Box"
 ---
 # 📂 Write-ups
 
-- 2026-11-23: [Conversor](/tech-bites/2026-11-23-htb-conversor) (XSLT Injection Dead Ends + Path Traversal File Write + MD5 Cracking + CVE-2024-48990 Privesc)
+- 2026-11-23: [Conversor](/tech-bites/2026-11-23-htb-conversor) (XSLT EXSLT File Write + Cron Abuse RCE + MD5 Cracking + CVE-2024-48990 Privesc)
 - 2026-11-18: [Facts](/tech-bites/2026-11-18-htb-facts) (Camaleon CMS Mass Assignment + MinIO S3 Leak + SSH Key Cracking + Facter Privesc)
 - 2026-11-16: [WingData](/tech-bites/2026-11-16-htb-wingdata) (Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc)
 - 2026-11-15: [CCTV](/tech-bites/2026-11-15-htb-cctv) (ZoneMinder Default Creds + CVE-2024-51482 SQLi + Bcrypt Cracking + CVE-2026-41651 Privesc)

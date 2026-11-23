@@ -11,7 +11,7 @@ layout: default
 
 
 ## 📌 Últimos write-ups
-- [HTB Conversor - XSLT Injection Dead Ends + Path Traversal File Write + MD5 Cracking + CVE-2024-48990 Privesc](/tech-bites/2026-11-23-htb-conversor/)
+- [HTB Conversor - XSLT EXSLT File Write + Cron Abuse RCE + MD5 Cracking + CVE-2024-48990 Privesc](/tech-bites/2026-11-23-htb-conversor/)
 - [HTB Facts - Camaleon CMS Mass Assignment + MinIO S3 Leak + SSH Key Cracking + Facter Privesc](/tech-bites/2026-11-18-htb-facts/)
 - [HTB WingData - Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc](/tech-bites/2026-11-16-htb-wingdata/)
 
