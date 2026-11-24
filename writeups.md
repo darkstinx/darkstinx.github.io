@@ -5,6 +5,7 @@ description: "Write-ups de máquinas de Hack The Box"
 ---
 # 📂 Write-ups
 
+- 2026-11-24: [Baby](/tech-bites/2026-11-24-htb-baby) (LDAP Anonymous Credential Leak + Password Spray + Backup Operators VSS NTDS Dump + Pass-the-Hash)
 - 2026-11-23: [Conversor](/tech-bites/2026-11-23-htb-conversor) (XSLT EXSLT File Write + Cron Abuse RCE + MD5 Cracking + CVE-2024-48990 Privesc)
 - 2026-11-18: [Facts](/tech-bites/2026-11-18-htb-facts) (Camaleon CMS Mass Assignment + MinIO S3 Leak + SSH Key Cracking + Facter Privesc)
 - 2026-11-16: [WingData](/tech-bites/2026-11-16-htb-wingdata) (Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc)
