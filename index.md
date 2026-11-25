@@ -11,9 +11,9 @@ layout: default
 
 
 ## 📌 Últimos write-ups
+- [HTB Expressway - IKE Aggressive Mode PSK Leak + Offline Cracking + Dirty Frag Kernel Privesc](/tech-bites/2026-11-25-htb-expressway/)
 - [HTB Baby - LDAP Anonymous Credential Leak + Password Spray + Backup Operators VSS NTDS Dump + Pass-the-Hash](/tech-bites/2026-11-24-htb-baby/)
 - [HTB Conversor - XSLT EXSLT File Write + Cron Abuse RCE + MD5 Cracking + CVE-2024-48990 Privesc](/tech-bites/2026-11-23-htb-conversor/)
-- [HTB Facts - Camaleon CMS Mass Assignment + MinIO S3 Leak + SSH Key Cracking + Facter Privesc](/tech-bites/2026-11-18-htb-facts/)
 - [HTB WingData - Wing FTP Lua RCE + Salted Hash Cracking + tarfile Path Traversal Privesc](/tech-bites/2026-11-16-htb-wingdata/)
 
   [Ver todos los write-ups →](/writeups/)
